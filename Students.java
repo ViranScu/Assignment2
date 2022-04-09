@@ -43,7 +43,7 @@ public class Students
                 line = myScanner.nextLine();
                 
                 if(lineCount == 1) {
-                    unitName = line;
+                    unitName = getUnitName(line);
                     System.out.println(unitName);
                 }
                 
@@ -52,6 +52,17 @@ public class Students
             System.out.println("This file cannot be found");
             ex.printStackTrace();
         }
+    }
+    
+    /**
+     * Method getUnitName
+     * This method returns the unit name
+     * @param lineInfo information read from the file
+     * @return unit name
+     */
+    public String getUnitName(String lineInfo) {
+        tokens = lineInfo.split(":");
+        return tokens[1].trim();
     }
     
     public static void main(String[] args) {
