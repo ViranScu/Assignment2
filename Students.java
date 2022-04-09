@@ -59,7 +59,6 @@ public class Students
                 if(lineCount != 2) {
                     if(lineCount == 1) {
                         unitName = getUnitName(line);
-                        System.out.println(unitName);
                     } else {
                         tokens = line.split(",");
                         getFirstNames();
@@ -186,8 +185,27 @@ public class Students
         }
     }
     
+    /**
+     * Method printStudentDetails
+     * This method prints all the students' information along with their
+     * total assignment marks
+     * @param
+     * @return
+     */
+    public void printStudentDetails() {
+        System.out.println("Unit name: "+unitName+"\n");
+        
+        for(int k=0; k<studentsIds.size(); k++) {
+            System.out.println(studentsFirstNames.get(k)+" "+studentsLastNames.get(k)+" | "+
+            studentsIds.get(k)+" | "+assignment1Marks.get(k)+" | "+assignment2Marks.get(k)+" | "+
+            assignment3Marks.get(k)+" | total marks -> "+totalMarks.get(k));
+        }
+    }
+    
     public static void main(String[] args) {
         Students obj = new Students();
         obj.readStudentsFile();
+        obj.calculateStudentsTotalMarks();
+        obj.printStudentDetails();
     }
 }
