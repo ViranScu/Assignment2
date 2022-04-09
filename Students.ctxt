@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Students
+comment0.text=\n\ This\ class\ reads\ unit\ name\ and\ students'\ info\ including\ last\ name,\n\ first\ name,\ student\ id,\ assignment1\ marks,\ assignment2\ marks,\ assignment\ 3\ marks\ \n\ and\ calculates\ the\ total\ marks\ of\ each\ student.\ Then\ prints\ the\ results.\n\n\ @author\ (Viran\ Pravinda)\n\ @version\ (09-04-2022)\n
+comment1.params=
+comment1.target=Students()
+comment1.text=\n\ Constructor\ for\ objects\ of\ class\ Students\n
+numComments=2
