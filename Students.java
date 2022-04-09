@@ -23,7 +23,7 @@ public class Students
     private ArrayList<Double> assignment1Marks;
     private ArrayList<Double> assignment2Marks;
     private ArrayList<Double> assignment3Marks;
-
+    private ArrayList<Double> totalMarks; //total = assignment1Marks+assignment2Marks+assignment3Marks
 
     /**
      * Constructor for objects of class Students
@@ -37,6 +37,7 @@ public class Students
         assignment1Marks = new ArrayList<Double>();
         assignment2Marks = new ArrayList<Double>();
         assignment3Marks = new ArrayList<Double>();
+        totalMarks = new ArrayList<Double>();
     }
     
     /**
@@ -87,7 +88,6 @@ public class Students
         return tokens[1].trim();
     }
     
-    
     /**
      * Method getFirstNames
      * this method adds all the students' first names read from
@@ -129,6 +129,9 @@ public class Students
      * @return
      */
     public void getStudentsAssignment1Marks() {
+        if(tokens[3].isEmpty()) {
+            tokens[3] = "0";
+        }
         assignment1Marks.add(Double.parseDouble(tokens[3]));
     }
     
@@ -140,7 +143,14 @@ public class Students
      * @return
      */
     public void getStudentsAssignment2Marks() {
-        assignment2Marks.add(Double.parseDouble(tokens[4]));
+        double assignment2Mark = 0;
+        
+        try {
+            assignment2Marks.add(Double.parseDouble(tokens[4]));       
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            assignment2Marks.add(assignment2Mark);
+            ex.printStackTrace();
+        }      
     }
     
     /**
@@ -151,7 +161,29 @@ public class Students
      * @return
      */
     public void getStudentsAssignment3Marks() {
-        assignment3Marks.add(Double.parseDouble(tokens[5]));
+        double assignment3Mark = 0;
+        
+        try {
+            assignment3Marks.add(Double.parseDouble(tokens[5]));
+        } catch(ArrayIndexOutOfBoundsException ex) {
+            assignment3Marks.add(assignment3Mark);
+            ex.printStackTrace();
+        }      
+    }
+    
+    /**
+     * Method calculateStudentsTotalMarks
+     * this method calculates total of an individual student
+     * and adds it to totalMarks ArrayList
+     * @param
+     * @return
+     */
+    public void calculateStudentsTotalMarks() {
+        for(int j=0; j<studentsIds.size(); j++) {
+            double total = assignment1Marks.get(j) + assignment2Marks.get(j) + 
+                            assignment3Marks.get(j);
+            totalMarks.add(total);
+        }
     }
     
     public static void main(String[] args) {
