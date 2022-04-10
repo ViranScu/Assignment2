@@ -50,7 +50,7 @@ public class Students
         studentIdsForThreshold = new ArrayList<Integer>();
         totalMarksWithStudentIds = new ArrayList<String>();
     }
-    
+
     /**
      * Method readStudentsFile
      * This method reads data from the input file
@@ -62,11 +62,11 @@ public class Students
         try {
             File studentsFile = new File("prog5001_students_grade_2022.csv");
             Scanner myScanner = new Scanner(studentsFile);
-            
+
             while(myScanner.hasNextLine()) {
                 lineCount++;
                 line = myScanner.nextLine();
-                
+
                 if(lineCount != 2) {
                     if(lineCount == 1) {
                         unitName = getUnitName(line);
@@ -86,7 +86,7 @@ public class Students
             ex.printStackTrace();
         }
     }
-    
+
     /**
      * Method getUnitName
      * This method returns the unit name
@@ -97,7 +97,7 @@ public class Students
         tokens = lineInfo.split(":");
         return tokens[1].trim();
     }
-    
+
     /**
      * Method getFirstNames
      * this method adds all the students' first names read from
@@ -108,7 +108,7 @@ public class Students
     public void getFirstNames() {
         studentsFirstNames.add(tokens[1]);
     }
-    
+
     /**
      * Method getLastNames
      * this method adds all the students' last names read from
@@ -119,7 +119,7 @@ public class Students
     public void getLastNames() {
         studentsLastNames.add(tokens[0]);
     }
-    
+
     /**
      * Method getStudentsIds
      * this method adds all the students' ids read from file
@@ -130,7 +130,7 @@ public class Students
     public void getStudentsIds() {
         studentsIds.add(Integer.parseInt(tokens[2]));
     }
-    
+
     /**
      * Method getStudentsAssignment1Marks
      * this method adds all the students' assignment 1 marks read from
@@ -144,7 +144,7 @@ public class Students
         }
         assignment1Marks.add(Double.parseDouble(tokens[3]));
     }
-    
+
     /**
      * Method getStudentsAssignment2Marks
      * this method adds all the students' assignment 2 marks read from
@@ -154,7 +154,7 @@ public class Students
      */
     public void getStudentsAssignment2Marks() {
         double assignment2Mark = 0;
-        
+
         try {
             assignment2Marks.add(Double.parseDouble(tokens[4]));       
         } catch(ArrayIndexOutOfBoundsException ex) {
@@ -162,7 +162,7 @@ public class Students
             ex.printStackTrace();
         }      
     }
-    
+
     /**
      * Method getStudentsAssignment3Marks
      * this method adds all the students' assignment 3 marks read from
@@ -172,7 +172,7 @@ public class Students
      */
     public void getStudentsAssignment3Marks() {
         double assignment3Mark = 0;
-        
+
         try {
             assignment3Marks.add(Double.parseDouble(tokens[5]));
         } catch(ArrayIndexOutOfBoundsException ex) {
@@ -180,7 +180,7 @@ public class Students
             ex.printStackTrace();
         }      
     }
-    
+
     /**
      * Method calculateStudentsTotalMarks
      * this method calculates total of an individual student
@@ -191,11 +191,11 @@ public class Students
     public void calculateStudentsTotalMarks() {
         for(int j=0; j<studentsIds.size(); j++) {
             double total = assignment1Marks.get(j) + assignment2Marks.get(j) + 
-                            assignment3Marks.get(j);
+                assignment3Marks.get(j);
             totalMarks.add(total);
         }
     }
-    
+
     /**
      * Method printStudentDetails
      * This method prints all the students' information along with their
@@ -205,14 +205,14 @@ public class Students
      */
     public void printStudentDetails() {
         System.out.println("Unit name: "+unitName+"\n");
-        
+
         for(int k=0; k<studentsIds.size(); k++) {
             System.out.println(studentsFirstNames.get(k)+" "+studentsLastNames.get(k)+" | "+
-            studentsIds.get(k)+" | "+assignment1Marks.get(k)+" | "+assignment2Marks.get(k)+" | "+
-            assignment3Marks.get(k)+" | total marks -> "+totalMarks.get(k));
+                studentsIds.get(k)+" | "+assignment1Marks.get(k)+" | "+assignment2Marks.get(k)+" | "+
+                assignment3Marks.get(k)+" | total marks -> "+totalMarks.get(k));
         }
     }
-    
+
     /**
      * Method createStudentsHashMap
      * This method adds all the students info into a hashmap
@@ -222,11 +222,11 @@ public class Students
     public void createStudentsHashMap() {
         for(int i=0; i<studentsIds.size(); i++) {
             String studentInfo = studentsFirstNames.get(i)+","+studentsLastNames.get(i)+","+assignment1Marks.get(i)+
-                                ","+assignment2Marks.get(i)+","+assignment3Marks.get(i)+","+totalMarks.get(i);
+                ","+assignment2Marks.get(i)+","+assignment3Marks.get(i)+","+totalMarks.get(i);
             studentsMap.put(studentsIds.get(i), studentInfo);
         }
     }
-    
+
     /**
      * Method displayMenu
      * This method will display menu items
@@ -242,7 +242,7 @@ public class Students
         System.out.println("3. Print the top 10 students with lowest total marks");
         System.out.println("4. Quit");
     }
-    
+
     /**
      * Method getMenuItem
      * This method is used to get the user entered menu item no
@@ -252,13 +252,13 @@ public class Students
      */
     public void getMenuItem() {
         boolean correctOption = false;
-        
+
         while(!correctOption) {
             Scanner enteredOption = new Scanner(System.in);
-            
+
             try {
                 option = enteredOption.nextInt();
-                
+
                 switch(option) {
                     case 1:
                         getStudentsByThreshold();
@@ -266,6 +266,10 @@ public class Students
                         break;
                     case 2:
                         printStudentsWithHighestTotalMarks();
+                        correctOption = true;
+                        break;
+                    case 3:
+                        printStudentsWithLowestTotalMarks();
                         correctOption = true;
                         break;
                     case 4:
@@ -280,8 +284,7 @@ public class Students
             }
         }
     }
-    
-    
+
     /**
      * Method getStudentsByThreshold
      * This method is used to get the students with the total marks
@@ -292,15 +295,15 @@ public class Students
      */
     public void getStudentsByThreshold() {
         boolean correctThreshold = false;
-        
+
         while(!correctThreshold) {
             System.out.println("Please, enter threshold value");
             Scanner thresholdScanner = new Scanner(System.in);
-            
+
             try {
                 correctThreshold = true;
                 threshold = thresholdScanner.nextDouble();
-                
+
                 for(int i=0; i<studentsIds.size(); i++) {
                     if(totalMarks.get(i) < threshold) {
                         studentIdsForThreshold.add(studentsIds.get(i));
@@ -313,7 +316,7 @@ public class Students
             } 
         }
     }
-    
+
     /**
      * Method printStudentsInfoForThreshold
      * This method is used to print the students with total marks less than
@@ -323,17 +326,17 @@ public class Students
      */
     public void printStudentsInfoForThreshold() {
         String[] thresholdTokens;
-        
+
         System.out.println("Students with the total marks less than "+threshold);
         System.out.println("------------------------------------------------------------");
-        
+
         for(int i=0; i<studentIdsForThreshold.size(); i++) {            
             thresholdTokens = (studentsMap.get(studentIdsForThreshold.get(i))).split(",");
             System.out.println(thresholdTokens[0]+" "+thresholdTokens[1]+" | "+studentIdsForThreshold.get(i)+" | "+
-                            thresholdTokens[2]+" | "+thresholdTokens[3]+" | "+thresholdTokens[4]+" | total -> "+thresholdTokens[5]);
+                thresholdTokens[2]+" | "+thresholdTokens[3]+" | "+thresholdTokens[4]+" | total -> "+thresholdTokens[5]);
         }
     }
-    
+
     /**
      * Method createArrayListWithTotalMarksAndStudentsIds
      * This method is used to create an ArrayList with Students' total marks and Ids
@@ -345,7 +348,7 @@ public class Students
             totalMarksWithStudentIds.add(totalMarks.get(i)+"-"+studentsIds.get(i));
         }
     }
-    
+
     /**
      * Method printStudentsWithHighestTotalMarks
      * This method is used to sort the totalMarksWithStudentIds ArrayList in descending order
@@ -357,18 +360,40 @@ public class Students
         String[] totalMarksWithStudentIdsTokens;
         String[] studentsInfoTokens;
         Collections.sort(totalMarksWithStudentIds, Collections.reverseOrder());
-        
+
         System.out.println("Top 10 students with the highest total marks");
         System.out.println("--------------------------------------------------------------");
-        
+
         for(int i=0; i<STUDENTS_COUNT; i++) {
             totalMarksWithStudentIdsTokens = (totalMarksWithStudentIds.get(i)).split("-");
             studentsInfoTokens = (studentsMap.get(Integer.parseInt(totalMarksWithStudentIdsTokens[1]))).split(",");
             System.out.println(studentsInfoTokens[0]+" "+studentsInfoTokens[1]+" | "+totalMarksWithStudentIdsTokens[1]+" | "+
-                            studentsInfoTokens[2]+" | "+studentsInfoTokens[3]+" | "+studentsInfoTokens[4]+" | total -> "+studentsInfoTokens[5]);
+                studentsInfoTokens[2]+" | "+studentsInfoTokens[3]+" | "+studentsInfoTokens[4]+" | total -> "+studentsInfoTokens[5]);
         }
     }
-    
+
+    /**
+     * Method printStudentsWithLowestTotalMarks
+     * This method is used to print the students with the lowest total marks
+     * @param
+     * @return
+     */
+    public void printStudentsWithLowestTotalMarks() {
+        String[] totalMarksTokens;
+        String[] infoTokens;
+        Collections.sort(totalMarksWithStudentIds);
+
+        System.out.println("Top 10 students with the lowest total marks");
+        System.out.println("--------------------------------------------------------------");
+
+        for(int j=0; j<STUDENTS_COUNT; j++) {
+            totalMarksTokens = (totalMarksWithStudentIds.get(j)).split("-");
+            infoTokens = (studentsMap.get(Integer.parseInt(totalMarksTokens[1]))).split(",");
+            System.out.println(infoTokens[0]+" "+infoTokens[1]+" | "+totalMarksTokens[1]+" | "+
+                infoTokens[2]+" | "+infoTokens[3]+" | "+infoTokens[4]+" | total -> "+infoTokens[5]);
+        }
+    }
+
     public static void main(String[] args) {
         Students obj = new Students();
         obj.readStudentsFile();
