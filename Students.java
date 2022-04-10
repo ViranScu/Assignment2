@@ -2,6 +2,7 @@ import java.io.File;
 import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  * This class reads unit name and students' info including last name,
@@ -24,6 +25,7 @@ public class Students
     private ArrayList<Double> assignment2Marks;
     private ArrayList<Double> assignment3Marks;
     private ArrayList<Double> totalMarks; //total = assignment1Marks+assignment2Marks+assignment3Marks
+    private HashMap<Integer,String> studentsMap;
 
     /**
      * Constructor for objects of class Students
@@ -38,6 +40,7 @@ public class Students
         assignment2Marks = new ArrayList<Double>();
         assignment3Marks = new ArrayList<Double>();
         totalMarks = new ArrayList<Double>();
+        studentsMap = new HashMap<Integer,String>();
     }
     
     /**
@@ -202,10 +205,25 @@ public class Students
         }
     }
     
+    /**
+     * Method createStudentsHashMap
+     * This method adds all the students info into a hashmap
+     * @param
+     * @return
+     */
+    public void createStudentsHashMap() {
+        for(int i=0; i<studentsIds.size(); i++) {
+            String studentInfo = studentsFirstNames.get(i)+","+studentsLastNames.get(i)+","+assignment1Marks.get(i)+
+                                ","+assignment2Marks.get(i)+","+assignment3Marks.get(i)+","+totalMarks.get(i);
+            studentsMap.put(studentsIds.get(i), studentInfo);
+        }
+    }
+    
     public static void main(String[] args) {
         Students obj = new Students();
         obj.readStudentsFile();
         obj.calculateStudentsTotalMarks();
         obj.printStudentDetails();
+        obj.createStudentsHashMap();
     }
 }
