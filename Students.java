@@ -219,11 +219,28 @@ public class Students
         }
     }
     
+    /**
+     * Method displayMenu
+     * This method will display menu items
+     * @param
+     * @return
+     */
+    public void displayMenu() {
+        System.out.println();
+        System.out.println("******************** Students' Application ********************");
+        System.out.println("Please, select an option from the below menu");
+        System.out.println("1. Print the list of students with the total marks less than a certain threshold");
+        System.out.println("2. Print the top 10 students with highest total marks");
+        System.out.println("3. Print the top 10 students with lowest total marks");
+        System.out.println("4. Quit");
+    }
+    
     public static void main(String[] args) {
         Students obj = new Students();
         obj.readStudentsFile();
         obj.calculateStudentsTotalMarks();
         obj.printStudentDetails();
         obj.createStudentsHashMap();
+        obj.displayMenu();
     }
 }
