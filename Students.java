@@ -26,6 +26,9 @@ public class Students
     private ArrayList<Double> assignment3Marks;
     private ArrayList<Double> totalMarks; //total = assignment1Marks+assignment2Marks+assignment3Marks
     private HashMap<Integer,String> studentsMap;
+    private int option;
+    private double threshold;
+    private ArrayList<Integer> studentIdsForThreshold;
 
     /**
      * Constructor for objects of class Students
@@ -41,6 +44,7 @@ public class Students
         assignment3Marks = new ArrayList<Double>();
         totalMarks = new ArrayList<Double>();
         studentsMap = new HashMap<Integer,String>();
+        studentIdsForThreshold = new ArrayList<Integer>();
     }
     
     /**
@@ -235,12 +239,102 @@ public class Students
         System.out.println("4. Quit");
     }
     
+    /**
+     * Method getMenuItem
+     * This method is used to get the user entered menu item no
+     * and execute relevant methods according to selected option
+     * @param
+     * @return
+     */
+    public void getMenuItem() {
+        boolean correctOption = false;
+        
+        while(!correctOption) {
+            Scanner enteredOption = new Scanner(System.in);
+            
+            try {
+                option = enteredOption.nextInt();
+                
+                switch(option) {
+                    case 1:
+                        getStudentsByThreshold();
+                        correctOption = true;
+                        break;
+                    case 4:
+                        System.exit(0);
+                        break;
+                    default:
+                        System.out.println("Incorrect option. Please, enter option 1,2,3 or 4");
+                        correctOption = false;
+                }
+            } catch(Exception ex) {
+                System.out.println("Incorrect option. Please, enter option 1,2,3 or 4");
+            }
+        }
+    }
+    
+    
+    /**
+     * Method getStudentsByThreshold
+     * This method is used to get the students with the total marks
+     * less than a user entered threshold and add those students to
+     * studentIdsForThreshold ArrayList
+     * @param
+     * @return
+     */
+    public void getStudentsByThreshold() {
+        boolean correctThreshold = false;
+        
+        while(!correctThreshold) {
+            System.out.println("Please, enter threshold value");
+            Scanner thresholdScanner = new Scanner(System.in);
+            
+            try {
+                correctThreshold = true;
+                threshold = thresholdScanner.nextDouble();
+                
+                for(int i=0; i<studentsIds.size(); i++) {
+                    if(totalMarks.get(i) < threshold) {
+                        studentIdsForThreshold.add(studentsIds.get(i));
+                    }
+                }
+                printStudentsInfoForThreshold();
+            } catch(Exception ex) {
+                correctThreshold = false;
+                System.out.println("Please, enter a number for threshold");
+            } 
+        }
+    }
+    
+    /**
+     * Method printStudentsInfoForThreshold
+     * This method is used to print the students with total marks less than
+     * the threshold
+     * @param
+     * @return
+     */
+    public void printStudentsInfoForThreshold() {
+        String[] thresholdTokens;
+        
+        System.out.println("students with the total marks less than "+threshold);
+        System.out.println("------------------------------------------------------------");
+        
+        for(int i=0; i<studentIdsForThreshold.size(); i++) {            
+            thresholdTokens = (studentsMap.get(studentIdsForThreshold.get(i))).split(",");
+                                System.out.println(thresholdTokens[0]+" "+thresholdTokens[1]+" | "+studentIdsForThreshold.get(i)+" | "+
+                                thresholdTokens[2]+" | "+thresholdTokens[3]+" | "+thresholdTokens[4]+" | total -> "+thresholdTokens[5]);
+        }
+    }
+    
     public static void main(String[] args) {
         Students obj = new Students();
         obj.readStudentsFile();
         obj.calculateStudentsTotalMarks();
         obj.printStudentDetails();
         obj.createStudentsHashMap();
-        obj.displayMenu();
+        while(obj.option != 4) {
+            obj.displayMenu();
+            obj.getMenuItem();  
+        }
     }
 }
