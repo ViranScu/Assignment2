@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Collections;
 
 /**
  * This class reads unit name and students' info including last name,
@@ -29,6 +30,8 @@ public class Students
     private int option;
     private double threshold;
     private ArrayList<Integer> studentIdsForThreshold;
+    private final int STUDENTS_COUNT = 10;
+    private ArrayList<String> totalMarksWithStudentIds;
 
     /**
      * Constructor for objects of class Students
@@ -45,6 +48,7 @@ public class Students
         totalMarks = new ArrayList<Double>();
         studentsMap = new HashMap<Integer,String>();
         studentIdsForThreshold = new ArrayList<Integer>();
+        totalMarksWithStudentIds = new ArrayList<String>();
     }
     
     /**
@@ -260,6 +264,10 @@ public class Students
                         getStudentsByThreshold();
                         correctOption = true;
                         break;
+                    case 2:
+                        printStudentsWithHighestTotalMarks();
+                        correctOption = true;
+                        break;
                     case 4:
                         System.exit(0);
                         break;
@@ -316,13 +324,48 @@ public class Students
     public void printStudentsInfoForThreshold() {
         String[] thresholdTokens;
         
-        System.out.println("students with the total marks less than "+threshold);
+        System.out.println("Students with the total marks less than "+threshold);
         System.out.println("------------------------------------------------------------");
         
         for(int i=0; i<studentIdsForThreshold.size(); i++) {            
             thresholdTokens = (studentsMap.get(studentIdsForThreshold.get(i))).split(",");
-                                System.out.println(thresholdTokens[0]+" "+thresholdTokens[1]+" | "+studentIdsForThreshold.get(i)+" | "+
-                                thresholdTokens[2]+" | "+thresholdTokens[3]+" | "+thresholdTokens[4]+" | total -> "+thresholdTokens[5]);
+            System.out.println(thresholdTokens[0]+" "+thresholdTokens[1]+" | "+studentIdsForThreshold.get(i)+" | "+
+                            thresholdTokens[2]+" | "+thresholdTokens[3]+" | "+thresholdTokens[4]+" | total -> "+thresholdTokens[5]);
+        }
+    }
+    
+    /**
+     * Method createArrayListWithTotalMarksAndStudentsIds
+     * This method is used to create an ArrayList with Students' total marks and Ids
+     * @param
+     * @return
+     */
+    public void createArrayListWithTotalMarksAndStudentsIds() {
+        for(int i=0; i<studentsIds.size(); i++) {
+            totalMarksWithStudentIds.add(totalMarks.get(i)+"-"+studentsIds.get(i));
+        }
+    }
+    
+    /**
+     * Method printStudentsWithHighestTotalMarks
+     * This method is used to sort the totalMarksWithStudentIds ArrayList in descending order
+     * and print the top 10 students with highest total marks 
+     * @param
+     * @return
+     */
+    public void printStudentsWithHighestTotalMarks() {
+        String[] totalMarksWithStudentIdsTokens;
+        String[] studentsInfoTokens;
+        Collections.sort(totalMarksWithStudentIds, Collections.reverseOrder());
+        
+        System.out.println("Top 10 students with the highest total marks");
+        System.out.println("--------------------------------------------------------------");
+        
+        for(int i=0; i<STUDENTS_COUNT; i++) {
+            totalMarksWithStudentIdsTokens = (totalMarksWithStudentIds.get(i)).split("-");
+            studentsInfoTokens = (studentsMap.get(Integer.parseInt(totalMarksWithStudentIdsTokens[1]))).split(",");
+            System.out.println(studentsInfoTokens[0]+" "+studentsInfoTokens[1]+" | "+totalMarksWithStudentIdsTokens[1]+" | "+
+                            studentsInfoTokens[2]+" | "+studentsInfoTokens[3]+" | "+studentsInfoTokens[4]+" | total -> "+studentsInfoTokens[5]);
         }
     }
     
@@ -332,6 +375,7 @@ public class Students
         obj.calculateStudentsTotalMarks();
         obj.printStudentDetails();
         obj.createStudentsHashMap();
+        obj.createArrayListWithTotalMarksAndStudentsIds();
         while(obj.option != 4) {
             obj.displayMenu();
             obj.getMenuItem();  
